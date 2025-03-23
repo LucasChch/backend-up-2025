@@ -1,0 +1,24 @@
+{
+  "name": "backend-up-2025",
+  "version": "1.0.0",
+  "description": "Desarrollo backend de la materia full stack web development",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasChch/backend-up-2025.git"
+  },
+  "author": "LucasCh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucasChch/backend-up-2025/issues"
+  },
+  "homepage": "https://github.com/LucasChch/backend-up-2025#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
