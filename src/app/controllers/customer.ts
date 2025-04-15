@@ -1,5 +1,16 @@
 import * as CustomerService from "../services/customer";
 
+
+export const getAllCustomers = async (req:any, res:any) => {
+   try {
+      const customers = await CustomerService.getAllCustomers();
+      res.status(200).json(customers);
+   } catch (error) {
+      console.log("Error in getAllCustomers:", error);
+      res.status(500).json({ message: error });
+   }
+}
+
 export const createCustomer = async (req:any, res:any) => {
    try {
       const customer = await CustomerService.createCustomer(req.body);

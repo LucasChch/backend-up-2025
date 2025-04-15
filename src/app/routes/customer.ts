@@ -1,8 +1,9 @@
 import Router from 'express';
-import { createCustomer } from '../controllers/customer';
+import { createCustomer, getAllCustomers } from '../controllers/customer';
 
 const router = Router();
 
+router.get('/', getAllCustomers);
 router.post('/', createCustomer);
 
 export default router;
@@ -17,3 +18,5 @@ export default router;
 //     "email": "Dalinar@kholin.com",
 //     "phone": "1234567890"
 //   }'
+
+// curl -X GET http://localhost:3000/customer
