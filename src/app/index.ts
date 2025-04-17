@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import routes from './routes/index';
 import connectMongoDB from './config/mongodb.config';
+import initDB from './config/initdb/initdb';
 
 const app = express();
 
@@ -10,6 +11,8 @@ app.use(express.json());
 
 //conexión a la base de datos
 connectMongoDB();
+// Inicializo la base
+initDB();
 
 app.use(routes);
 
