@@ -12,7 +12,7 @@ app.use(express.json());
 //conexión a la base de datos
 connectMongoDB();
 // Inicializo la base
-initDB();
+//initDB();
 
 app.use(routes);
 

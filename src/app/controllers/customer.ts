@@ -1,7 +1,7 @@
+import express, { Request, Response } from 'express';
 import * as CustomerService from "../services/customer";
 
-
-export const getAllCustomers = async (req:any, res:any) => {
+export const getAllCustomers = async (req: Request, res: Response) => {
    try {
       const customers = await CustomerService.getAllCustomers();
       res.status(200).json(customers);
@@ -11,7 +11,7 @@ export const getAllCustomers = async (req:any, res:any) => {
    }
 }
 
-export const createCustomer = async (req:any, res:any) => {
+export const createCustomer = async (req: Request, res: Response) => {
    try {
       const customer = await CustomerService.createCustomer(req.body);
       res.status(201).json(customer);

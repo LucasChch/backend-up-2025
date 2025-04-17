@@ -1,0 +1,30 @@
+### Booking
+POST http://localhost:3000/booking
+Content-Type: application/json
+
+{
+      "customerId": "680147741501dc2744f6a24b",
+      "startTime": "2025-01-01T10:00:00Z",
+      "turns": "2",
+      "subTotal": 100,
+      "discountRate": 0.1,
+      "total": 90,
+      "discountAmt": 10,
+      "status": "booked",
+      "cancelDeadline": "2025-01-01T09:00:00Z",
+      "payDeadline": "2025-01-03T10:00:00Z",
+      "items": [{
+            "productId": "680147741501dc2744f6a250",
+            "quantity": 1,
+            "safetyItems": []
+      }]
+
+
+}
+
+
+      # {
+      #       "productId": "680147741501dc2744f6a252",
+      #       "quantity": 1,
+      #       "safetyItems": []
+      # }

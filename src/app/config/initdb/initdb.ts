@@ -21,6 +21,8 @@ const products = [
   { name: 'Tabla de Surf (adultos)', category: 'surf', maxPeople: 1, pricePerTurn: 6000, requiresSafety: false },
 ];
 
+const bookingItems = []
+
 // async function seedBookings(customers, products) {
 //   const bookings = [];
 

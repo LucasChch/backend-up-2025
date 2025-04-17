@@ -6,6 +6,11 @@ const BookingSchema = new mongoose.Schema({
       ref: 'Customer',
       required: true
    },
+   items: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'BookingItem',
+      required: true
+   }],
    createdAt: {
       type: Date,
       default: Date.now
