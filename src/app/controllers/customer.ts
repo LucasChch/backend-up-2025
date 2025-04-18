@@ -1,22 +1,32 @@
-import express, { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import * as CustomerService from "../services/customer";
+import { validateObjectId } from '../utils/validatorObjectId';
 
-export const getAllCustomers = async (req: Request, res: Response) => {
+export const getAllCustomers = async (req: Request, res: Response, next: NextFunction) => {
    try {
       const customers = await CustomerService.getAllCustomers();
       res.status(200).json(customers);
    } catch (error) {
-      console.log("Error in getAllCustomers:", error);
-      res.status(500).json({ message: error });
+      next(error);
    }
 }
 
-export const createCustomer = async (req: Request, res: Response) => {
+export const getCustomerById = async (req: Request, res: Response, next: NextFunction) => {
+   try {
+      const id = req.params.id
+      validateObjectId(id)
+      const customer = await CustomerService.getCustomerById(id)
+      res.status(200).json(customer)
+   } catch (error) {
+      next(error);
+   }
+}
+
+export const createCustomer = async (req: Request, res: Response, next: NextFunction) => {
    try {
       const customer = await CustomerService.createCustomer(req.body);
       res.status(201).json(customer);
    } catch (error) {
-      console.log("Error in createCustomer:", error);
-      res.status(500).json({ message: error });
+      next(error);
    }
 }
