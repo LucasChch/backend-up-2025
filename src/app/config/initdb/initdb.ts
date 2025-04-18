@@ -14,11 +14,11 @@ const customers = [
 ];
 
 const products = [
-  { name: 'JetSky', category: 'jetsky', maxPeople: 2, pricePerTurn: 10000, requiresSafety: true },
-  { name: 'Cuatriciclo', category: 'cuatriciclo', maxPeople: 2, pricePerTurn: 5000, requiresSafety: true },
-  { name: 'Equipo de Buceo', category: 'buceo', maxPeople: 1, pricePerTurn: 2500, requiresSafety: false },
-  { name: 'Tabla de Surf (niños)', category: 'surf', maxPeople: 1, pricePerTurn: 3000, requiresSafety: false },
-  { name: 'Tabla de Surf (adultos)', category: 'surf', maxPeople: 1, pricePerTurn: 6000, requiresSafety: false },
+  { name: 'JetSky', category: 'jetsky', maxPeople: 2, pricePerTurn: 10000, requiresSafety: true, stock: 5 },
+  { name: 'Cuatriciclo', category: 'cuatriciclo', maxPeople: 2, pricePerTurn: 5000, requiresSafety: true, stock: 5 },
+  { name: 'Equipo de Buceo', category: 'buceo', maxPeople: 1, pricePerTurn: 2500, requiresSafety: false, stock: 5 },
+  { name: 'Tabla de Surf (niños)', category: 'surf', maxPeople: 1, pricePerTurn: 3000, requiresSafety: false, stock: 5 },
+  { name: 'Tabla de Surf (adultos)', category: 'surf', maxPeople: 1, pricePerTurn: 6000, requiresSafety: false, stock: 5 },
 ];
 
 const bookingItems = []

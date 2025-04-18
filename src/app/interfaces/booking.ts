@@ -17,6 +17,7 @@ export interface Booking extends Document {
   items: BookingItem[];
   createdAt: Date;
   startTime: Date;
+  endTime: Date,
   turns: number;
   subTotal: number;
   discountRate: number;
@@ -31,13 +32,14 @@ export interface CreateBookingDto {
   customerId: string;
   items: {
     productId: string;
-    quantity?: number;
+    quantity: number;
     safetyItems?: {
       type: 'casco' | 'chaleco';
       quantity?: number;
     }[];
   }[];
   startTime: Date | string;
+  endTime: Date | string;
   turns: number;
   subTotal: number;
   discountRate: number;

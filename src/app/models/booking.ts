@@ -30,6 +30,10 @@ const BookingSchema = new mongoose.Schema({
       type: Date,
       required: true
    },
+   endTime: {
+      type: Date,
+      required: true
+   },
    turns: {
       type: Number,
       required: true,
