@@ -1,0 +1,49 @@
+// interfaces/booking.interfaces.ts
+import { Document, Types } from 'mongoose';
+
+export interface SafetyItem {
+  type: 'casco' | 'chaleco';
+  quantity: number;
+}
+
+export interface BookingItem {
+  productId: Types.ObjectId;
+  quantity: number;
+  safetyItems: SafetyItem[];
+}
+
+export interface Booking extends Document {
+  customerId: Types.ObjectId;
+  items: BookingItem[];
+  createdAt: Date;
+  startTime: Date;
+  turns: number;
+  subTotal: number;
+  discountRate: number;
+  discountAmt: number;
+  total: number;
+  status: 'booked' | 'completed' | 'cancelled';
+  cancelDeadline?: Date;
+  payDeadline?: Date;
+}
+
+export interface CreateBookingDto {
+  customerId: string;
+  items: {
+    productId: string;
+    quantity?: number;
+    safetyItems?: {
+      type: 'casco' | 'chaleco';
+      quantity?: number;
+    }[];
+  }[];
+  startTime: Date | string;
+  turns: number;
+  subTotal: number;
+  discountRate: number;
+  discountAmt: number;
+  total: number;
+  status?: 'booked' | 'completed' | 'cancelled';
+  cancelDeadline?: Date | string;
+  payDeadline?: Date | string;
+}

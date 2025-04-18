@@ -24,3 +24,8 @@ Content-Type: application/json
             "safetyItems": []
       }]
 }
+
+
+### Customer
+GET http://localhost:3000/customer/68017a6de5f17517c3ff4ca1
+Content-Type: application/json

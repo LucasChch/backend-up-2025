@@ -6,10 +6,10 @@ import Customer from '../../models/customer';
 import Product from '../../models/product';
 //import Booking from '../../models/booking';
 
-const MONGO_URI =  'mongodb://localhost:27017/rentaldb'; //TODO: Cambiar a variable de entorno process.env.MONGO_URI ||
+const MONGO_URI = 'mongodb://localhost:27017/rentaldb'; //TODO: Cambiar a variable de entorno process.env.MONGO_URI ||
 
 const customers = [
-  { name: 'Adoloin Kholin', email: 'Adoloin@rental.com', phone: '111222333' },
+  { name: 'Adolin Kholin', email: 'Adolin@rental.com', phone: '111222333' },
   { name: 'Dalinar Kholin', email: 'Dalinar@rental.com', phone: '444555666' },
 ];
 
