@@ -35,10 +35,6 @@ export const createBooking = async (bookingData: CreateBookingDto) => {
       }
 
       const totalReserved = await BookingRepository.getReservedCount(bookingData.items[0].productId, start, end);
-      console.log(`Total reservado para el producto ${item.productId} entre ${start} y ${end}: ${totalReserved}`);
-      console.log(`Cantidad solicitada: ${item.quantity}`);
-      console.log(`Stock disponible: ${product.stock}`);
-      console.log ("validacion es: ", totalReserved + item.quantity > product.stock)
       if (totalReserved + item.quantity > product.stock) {
          throw new ValidationError(`El producto ${item.productId} no tiene suficiente stock para la cantidad solicitada.`);
       }
