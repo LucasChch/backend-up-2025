@@ -3,6 +3,7 @@ import cors from 'cors';
 import routes from './routes/index';
 import connectMongoDB from './config/mongodb.config';
 import initDB from './config/initdb/initdb';
+import { errorHandler } from './middlewares/errorHandler';
 
 const app = express();
 
@@ -16,7 +17,7 @@ connectMongoDB();
 
 app.use(routes);
 
-
+app.use(errorHandler);
 
 app.listen(3000, () => {
    console.log('Server running on port 3000');
