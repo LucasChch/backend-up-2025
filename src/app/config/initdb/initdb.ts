@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 import Customer from '../../models/customer';
 import Product from '../../models/product';
-//import Booking from '../../models/booking';
+import Booking from '../../models/booking';
 
 const MONGO_URI = 'mongodb://localhost:27017/rentaldb'; //TODO: Cambiar a variable de entorno process.env.MONGO_URI ||
 
@@ -14,7 +14,7 @@ const customers = [
 ];
 
 const products = [
-  { name: 'JetSky', category: 'jetsky', maxPeople: 2, pricePerTurn: 10000, requiresSafety: true, stock: 5 },
+  { name: 'JetSky', category: 'jetsky', maxPeople: 2, pricePerTurn: 10000, requiresSafety: true, stock: 1 },
   { name: 'Cuatriciclo', category: 'cuatriciclo', maxPeople: 2, pricePerTurn: 5000, requiresSafety: true, stock: 5 },
   { name: 'Equipo de Buceo', category: 'buceo', maxPeople: 1, pricePerTurn: 2500, requiresSafety: false, stock: 5 },
   { name: 'Tabla de Surf (niños)', category: 'surf', maxPeople: 1, pricePerTurn: 3000, requiresSafety: false, stock: 5 },
@@ -71,7 +71,7 @@ async function initDB() {
     await Promise.all([
       Customer.deleteMany(),
       Product.deleteMany(),
-      //Booking.deleteMany()
+      Booking.deleteMany()
     ]);
 
     console.log('🧹 Colecciones limpiadas');
