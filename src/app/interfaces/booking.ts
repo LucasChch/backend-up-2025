@@ -7,9 +7,10 @@ export interface SafetyItem {
 }
 
 export interface BookingItem {
-  productId: Types.ObjectId;
+  productId: string;
   quantity: number;
-  safetyItems: SafetyItem[];
+  safetyItems?: SafetyItem;
+  peopleCount: number;
 }
 
 export interface Booking extends Document {
@@ -35,8 +36,9 @@ export interface CreateBookingDto {
     quantity: number;
     safetyItems?: {
       type: 'casco' | 'chaleco';
-      quantity?: number;
-    }[];
+      quantity: number;
+    };
+    peopleCount: number;
   }[];
   startTime: Date | string;
   endTime: Date | string;

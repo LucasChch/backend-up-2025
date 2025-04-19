@@ -3,8 +3,8 @@ POST http://localhost:3000/booking
 Content-Type: application/json
 
 {
-      "customerId": "68025e6bfd4545f71ba7399f",
-      "startTime": "Wed Jan 01 2025 07:00:00 GMT-0300",
+      "customerId": "68031346e7c08857694d78a5",
+      "startTime": "Wed Jan 02 2025 07:00:00 GMT-0300",
       "turns": "2",
       "subTotal": 100,
       "discountRate": 0.1,
@@ -14,9 +14,10 @@ Content-Type: application/json
       "cancelDeadline": "2025-01-01T09:00:00Z",
       "payDeadline": "2025-01-03T10:00:00Z",
       "items": [{
-            "productId": "68025e6bfd4545f71ba739a2",
+            "productId": "68031346e7c08857694d78a8",
             "quantity": 1,
-            "safetyItems": [{"type": "chaleco", "quantity": 1}]
+            "safetyItems": {"type": "chaleco", "quantity": 2},
+            "peopleCount": 2
       }]
 }
 

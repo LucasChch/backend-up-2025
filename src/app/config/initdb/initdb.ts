@@ -14,8 +14,8 @@ const customers = [
 ];
 
 const products = [
-  { name: 'JetSky', category: 'jetsky', maxPeople: 2, pricePerTurn: 10000, requiresSafety: true, stock: 1 },
-  { name: 'Cuatriciclo', category: 'cuatriciclo', maxPeople: 2, pricePerTurn: 5000, requiresSafety: true, stock: 5 },
+  { name: 'JetSky', category: 'jetsky', maxPeople: 2, pricePerTurn: 10000, requiresSafety: true, stock: 1, safetyRequiredType: 'chaleco' },
+  { name: 'Cuatriciclo', category: 'cuatriciclo', maxPeople: 2, pricePerTurn: 5000, requiresSafety: true, stock: 5, safetyRequiredType: 'casco' },
   { name: 'Equipo de Buceo', category: 'buceo', maxPeople: 1, pricePerTurn: 2500, requiresSafety: false, stock: 5 },
   { name: 'Tabla de Surf (niños)', category: 'surf', maxPeople: 1, pricePerTurn: 3000, requiresSafety: false, stock: 5 },
   { name: 'Tabla de Surf (adultos)', category: 'surf', maxPeople: 1, pricePerTurn: 6000, requiresSafety: false, stock: 5 },

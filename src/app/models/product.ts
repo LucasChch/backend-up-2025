@@ -21,6 +21,10 @@ const ProductSchema = new mongoose.Schema({
       type: Boolean,
       required: true
    },
+   safetyRequiredType: {
+      type: String,
+      enum: ['casco', 'chaleco'],
+   },
    stock: {
       type: Number,
       default: 1

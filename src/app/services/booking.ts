@@ -5,7 +5,6 @@ import { NotFoundError, ValidationError } from '../models/errors'
 import { CreateBookingDto } from '../interfaces/booking'
 
 export const createBooking = async (bookingData: CreateBookingDto) => {
-
    //valido que exista el cliente que solicita la reserva
    const customer = await CustomerService.getCustomerById(bookingData.customerId)
    if (!customer) {
@@ -21,18 +20,8 @@ export const createBooking = async (bookingData: CreateBookingDto) => {
       if (!product) {
          throw new NotFoundError(`El producto ${item.productId} no existe.`)
       }
-
-      if (product.requiresSafety && (!item.safetyItems || item.safetyItems.length === 0)) {
-         throw new ValidationError(`El producto ${item.productId} requiere elementos de seguridad y no se han proporcionado.`);
-      }
-
-      if (product.maxPeople < item.quantity) {
-         throw new ValidationError(`El producto ${item.productId} no tiene suficiente capacidad para la cantidad solicitada.`);
-      }
-
-      if (product.stock < item.quantity) {
-         throw new ValidationError(`El producto ${item.productId} no tiene suficiente stock para la cantidad solicitada.`);
-      }
+      // validaciones de producto
+      await ProductService.validateProduct(product, item)
 
       const totalReserved = await BookingRepository.getReservedCount(bookingData.items[0].productId, start, end);
       if (totalReserved + item.quantity > product.stock) {

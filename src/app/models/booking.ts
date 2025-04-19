@@ -3,14 +3,19 @@ import mongoose from 'mongoose';
 const safetyItemSchema = new mongoose.Schema({
    type: { type: String, enum: ['casco', 'chaleco'], required: true },
    quantity: { type: Number, default: 1 }
- });
- 
- const bookingItemSchema = new mongoose.Schema({
+});
+
+const bookingItemSchema = new mongoose.Schema({
    productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
    quantity: { type: Number, default: 1 },
-   safetyItems: [safetyItemSchema]
- });
- 
+   safetyItems: {safetyItemSchema},
+   peopleCount: {
+      type: Number,
+      required: true,
+      min: [1, 'Debe haber al menos una persona usando el producto']
+   },
+});
+
 
 const BookingSchema = new mongoose.Schema({
    customerId: {
