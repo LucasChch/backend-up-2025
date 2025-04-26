@@ -29,11 +29,24 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
          throw new ValidationError(`El producto ${item.productId} no tiene suficiente stock para la cantidad solicitada.`);
       }
    }
+   // valido que booking solo puede ser reservado hasta 48hs antes de la fecha de inicio
+   const now = new Date();
+   const bookingStartTime = new Date(bookingData.startTime);
+   let limitBookingDate = new Date(bookingStartTime.getTime() - 48 * 60 * 60 * 1000) // limite de la reserva son 48hs antes
+
+   // si hoy es más chico, es decir, anterior al limite calculado (tiempo de inicio de reserva - 48hs), es que todavía es muy temprano
+   if (now < limitBookingDate) {
+      throw new ValidationError("Las reservas solo se pueden realizar con un máximo de 48hs antes.");
+   }
+   // si hoy es más grande, es decir, posterior a la fecha de inicio de mi reserva, necesito una máquina del tiempo :)
+   if (now > bookingStartTime) {
+      throw new ValidationError("No se puede realizar una reserva en el pasado, al menos por ahora.")
+   }
 
    let newBooking;
    try {
       newBooking = await BookingRepository.createBooking(bookingData);
-      
+
       // VALIDACIONES Y CREACIÓN DEL PAGO
       const {
          subTotal,
