@@ -7,24 +7,31 @@ const PaymentSchema = new mongoose.Schema({
       required: true
    },
    paidAt: {
-      type: Date,
-      default: Date.now
+      type: Date
    },
    amount: {
       type: Number,
       required: true
    },
+   dueDate: {
+      type: Date,
+      required: function (this: any) { return this.method === 'cash'; }
+   },
    currency: {
       type: String,
-      required: true
+      required: true,
+      enum: ['ARS','USD', 'EUR']
    },
    method: {
       type: String,
-      required: true
+      required: true,
+      enum: ['card', 'cash']
    },
    status: {
       type: String,
-      required: true
+      required: true,
+      enum: ['pending', 'completed', 'expired', 'refunded'],
+      default: 'pending'
    },
 });
 

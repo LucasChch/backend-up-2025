@@ -1,5 +1,5 @@
 import Booking from '../models/booking';
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
 export const createBooking = async (bookingData: any) => {
    const booking = new Booking(bookingData);
@@ -35,4 +35,9 @@ export const getReservedCount = async (productId: string, start: Date | string, 
    ];
    const res = await Booking.aggregate(pipeline);
    return res[0]?.totalReserved ?? 0;
+}
+
+export const deleteBooking = async (bookingId: Types.ObjectId) => {
+   const res = await Booking.findByIdAndDelete(bookingId);
+   return res ? { success: true, deletedBooking: res } : { success: false, message: 'Booking not found' };
 }

@@ -45,33 +45,17 @@ const BookingSchema = new mongoose.Schema({
       min: 1,
       max: 3
    },
-   subTotal: {
-      type: Number,
-      required: true
-   },
-   discountRate: {
-      type: Number,
-      required: true
-   },
-   discountAmt: {
-      type: Number,
-      required: true
-   },
-   total: {
-      type: Number,
-      required: true
-   },
    status: {
       type: String,
-      enum: ['booked', 'completed', 'cancelled'],
+      enum: ['booked', 'completed', 'cancelled'], //realmente necesito completed??????
       default: 'booked'
    },
-   cancelDeadline: {
-      type: Date
-   },
-   payDeadline: {
-      type: Date,
-   },
+   // cancelDeadline: {
+   //    type: Date
+   // },
+   // payDeadline: {
+   //    type: Date,
+   // },
 });
 
 export default mongoose.model("Booking", BookingSchema);
