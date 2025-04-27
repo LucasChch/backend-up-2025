@@ -8,7 +8,7 @@ export const createBooking = async (bookingData: any) => {
 
 /**
   * Devuelve la suma de `quantity` de todos los bookingItems
-  * para un productId dado, que estén en estado 'confirmed' o 'pending'
+  * para un productId dado, que estén en estado 'booked'
   * y cuyo rango de turnos se solape con [start, end).
   */
 export const getReservedCount = async (productId: string, start: Date | string, end: Date | string) => {
@@ -16,7 +16,7 @@ export const getReservedCount = async (productId: string, start: Date | string, 
       // Filtrar reservas activas y con solape de horario
       {
          $match: {
-            status: { $in: ['booked', 'confirmed'] },
+            status: { $in: ['booked'] },//, 'confirmed'] },
             startTime: { $lt: end },
             endTime: { $gt: start }
          }

@@ -14,4 +14,5 @@ export interface ProcessedPaymentDto extends CreatePaymentDto {
     total: number;
     paidAt?: Date;
     dueDate?: Date;
+    status: 'pending' | 'paid' | 'expired' | 'refunded';
 }

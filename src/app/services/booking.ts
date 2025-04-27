@@ -53,11 +53,10 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
          discountRate,
          discountAmt,
          total
-      } = await PaymentService.calculatePaymentAmounts(newBooking.items);
+      } = await PaymentService.calculatePaymentAmounts(newBooking.items, newBooking.turns);
 
-      if (total > paymentData.amount && paymentData.method === 'card') {
-         throw new ValidationError("El monto que paga el usuario es menor al total de la reserva.")
-      }
+      // valido que el monto que paga el usuario sea mayor al total de la reserva, si es  para tarjeta
+      await PaymentService.validateAmountPaid(paymentData.amount, total, paymentData.method, paymentData.currency);
 
       const processedPaymentData: ProcessedPaymentDto = {
          ...paymentData,
@@ -68,6 +67,7 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
          total,
          paidAt: paymentData.method === 'card' ? new Date() : undefined,
          dueDate: paymentData.method === 'cash' ? new Date(newBooking.startTime.getTime() - 2 * 60 * 60 * 1000) : undefined, //tiene que ser hasta 2 horas antes de booking.startTime
+         status: paymentData.method === 'card' ? 'paid' : 'pending',
       }
       const payment = await PaymentService.createPayment(processedPaymentData)
 
@@ -81,3 +81,6 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
       throw error;
    }
 }
+
+
+//me queda ver si turns lo paso al item interno o lo dejo en booking

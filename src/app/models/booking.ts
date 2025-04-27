@@ -8,7 +8,7 @@ const safetyItemSchema = new mongoose.Schema({
 const bookingItemSchema = new mongoose.Schema({
    productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
    quantity: { type: Number, default: 1 },
-   safetyItems: {safetyItemSchema},
+   safetyItems: { safetyItemSchema },
    peopleCount: {
       type: Number,
       required: true,

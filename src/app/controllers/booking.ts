@@ -16,7 +16,6 @@ export const createBooking = async (req: Request, res: Response, next: NextFunct
          throw new ValidationError("El número de turnos debe ser entre 1 y 3.");
       }
 
-      // Aca podría agregar un paymentData, donde tomo el método de pago y el tipo de moneda
       const bookingData: CreateBookingDto = {
          customerId,
          items,

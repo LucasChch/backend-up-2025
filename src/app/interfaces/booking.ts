@@ -1,17 +1,16 @@
-// interfaces/booking.interfaces.ts
 import { Document, Types } from 'mongoose';
 
-// export interface SafetyItem {
-//   type: 'casco' | 'chaleco';
-//   quantity: number;
-// }
+export interface SafetyItem {
+  type: 'casco' | 'chaleco';
+  quantity: number;
+}
 
-// export interface BookingItem {
-//   productId: string;
-//   quantity: number;
-//   safetyItems?: SafetyItem;
-//   peopleCount: number;
-// }
+export interface BookingItem {
+  productId: string;
+  quantity: number;
+  safetyItems?: SafetyItem;
+  peopleCount: number;
+}
 
 // export interface Booking extends Document {
 //   customerId: Types.ObjectId;

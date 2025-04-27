@@ -4,12 +4,12 @@ Content-Type: application/json
 
 {
       "customerId": "68031346e7c08857694d78a5",
-      "startTime": "Wed Jan 02 2025 07:00:00 GMT-0300",
+      "startTime": "Mon Apr 28 2025 07:00:00 GMT-0300",
       "turns": "2",
       "status": "booked",
       "method": "card",
-      "amount": 1000,
-      "currency": "ARS", // SI PONGO VARIAS MONEDAS, DEBERIA HACER EL CAMBIO
+      "amount": 20,
+      "currency": "USD",
       //"cancelDeadline": "2025-01-01T09:00:00Z",
       //"payDeadline": "2025-01-03T10:00:00Z",
       "items": [{
