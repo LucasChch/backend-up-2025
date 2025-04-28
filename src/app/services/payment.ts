@@ -1,3 +1,4 @@
+import { CreatePaymentDto } from '../interfaces/payment';
 import { ValidationError } from '../models/errors';
 import * as PaymentRepository from '../repositories/payment';
 import * as ProductService from '../services/product';
@@ -50,18 +51,40 @@ export const calculatePaymentAmounts = async (bookingItems: any[], turns: number
     }
 }
 
-export const validateAmountPaid = async (amountPaid: number, total: number, method: 'cash' | 'card', currency: 'ARS' | 'USD' | 'EUR') => {
+export const validateAmountPaid = async (amountPaid: number, total: number, currency: 'ARS' | 'USD' | 'EUR') => {
 
     //hago simulación  de una conversión de precios de monedas
     if (currency === 'USD' || currency === 'EUR') {
         amountPaid = amountPaid * 1000;
     }
 
-    if (method === 'card' && total > amountPaid) {
+    if (total > amountPaid) {
         throw new ValidationError("El monto que paga el usuario es menor al total de la reserva.")
     }
+
+    return true;
 }
 
 export const updatePaymentStatus = async (paymentId: string, status: 'pending' | 'paid' | 'refundedTotal' | 'refundedPartial') => {
     return await PaymentRepository.updatePaymentStatus(paymentId, status);
+}
+
+export const payPaymentWithCash = async (bookingId: string, paymentData: CreatePaymentDto) => {
+    const payment = await PaymentRepository.getPaymentByBookingId(bookingId);
+
+    if (!payment) {
+        throw new ValidationError("No se encontró el pago asociado a la reserva.");
+    }
+
+    // dependiendo de la moneda que pague, hago la conversión
+    if (paymentData.currency === 'USD' || paymentData.currency === 'EUR') {
+        paymentData.amount = paymentData.amount * 1000;
+    }
+
+    // valido que el monto a pagar por el usuario sea mayor al total de la reserva
+    if (payment.total > paymentData.amount) {
+        throw new ValidationError("El monto que paga el usuario es menor al total de la reserva.")
+    }
+
+
 }

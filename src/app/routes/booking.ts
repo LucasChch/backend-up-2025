@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/', getAllBookings)
 router.post('/', createBooking);
-router.patch('/:id/cancel', cancelBooking);
+router.patch('/cancel/:id', cancelBooking);
 
 
 export default router

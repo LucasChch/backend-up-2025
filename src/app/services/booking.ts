@@ -59,8 +59,18 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
          total
       } = await PaymentService.calculatePaymentAmounts(newBooking.items, newBooking.turns);
 
-      // valido que el monto que paga el usuario sea mayor al total de la reserva, si es  para tarjeta
-      await PaymentService.validateAmountPaid(paymentData.amount, total, paymentData.method, paymentData.currency);
+      // valido que si paga con tarjeta tiene que haber monto
+      if (paymentData.method === 'card' && paymentData.amount === 0) {
+         throw new ValidationError("Si esta reservando con tarjeta debe pagar el monto total");
+      }
+      // valido que el monto que paga el usuario sea mayor al total de la reserva
+      // si es cash puede ser 0 entonces no valido, doy de alta el payment pero en 'peding' en cambio si es tarjeta si o si pago el total
+      let paidComplete: boolean = false;
+      if (paymentData.amount > 0) {
+         paidComplete = await PaymentService.validateAmountPaid(paymentData.amount, total, paymentData.currency);
+      }
+
+      // CON ESTO LO QUE HICE FUE PODER CREAR BOOKING PAGANDO CON EFECTIVO
 
       const processedPaymentData: ProcessedPaymentDto = {
          ...paymentData,
@@ -69,9 +79,9 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
          discountRate,
          discountAmt,
          total,
-         paidAt: paymentData.method === 'card' ? new Date() : undefined,
-         dueDate: paymentData.method === 'cash' ? new Date(newBooking.startTime.getTime() - 2 * 60 * 60 * 1000) : undefined, //tiene que ser hasta 2 horas antes de booking.startTime
-         status: paymentData.method === 'card' ? 'paid' : 'pending',
+         paidAt: paidComplete ? new Date() : undefined,//paymentData.method === 'card' ? new Date() : undefined,
+         dueDate: !paidComplete ? new Date(newBooking.startTime.getTime() - 2 * 60 * 60 * 1000) : undefined,//paymentData.method === 'cash' ? new Date(newBooking.startTime.getTime() - 2 * 60 * 60 * 1000) : undefined, //tiene que ser hasta 2 horas antes de booking.startTime
+         status: paidComplete ? 'paid' : 'pending' //paymentData.method === 'card' ? 'paid' : 'pending',
       }
       const payment = await PaymentService.createPayment(processedPaymentData)
 
@@ -138,3 +148,4 @@ export const cancelBooking = async (bookingId: string) => {
 
 //me queda ver si turns lo paso al item interno o lo dejo en booking
 // hago endpoint que sea pago efectivo?
+// y otro para refundPorTormenta
