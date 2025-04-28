@@ -68,3 +68,15 @@ export const cancelBooking = async (bookingId: string) => {
    }
    return updatedBooking;
 }
+
+export const refundBooking = async (bookingId: string) => {
+   const updatedBooking = await Booking.findByIdAndUpdate(
+      bookingId,
+      { status: 'refunded' },
+      { new: true, runValidators: true }
+   );
+   if (!updatedBooking) {
+      throw new NotFoundError(`No se encontró la reserva con ID ${bookingId} para poder reembolsarla.`);
+   }
+   return updatedBooking;
+}

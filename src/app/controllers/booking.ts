@@ -47,7 +47,6 @@ export const createBooking = async (req: Request, res: Response, next: NextFunct
    }
 }
 
-
 export const cancelBooking = async (req: Request, res: Response, next: NextFunction) => {
    try {
       const bookingId  = req.params.id;
@@ -55,6 +54,19 @@ export const cancelBooking = async (req: Request, res: Response, next: NextFunct
          throw new ValidationError("Falta información requerida para cancelar una reserva.");
       }
       const booking = await BookingService.cancelBooking(bookingId);
+      res.status(200).json(booking);
+   } catch (error) {
+      next(error);
+   }
+}
+
+export const refundBooking = async (req: Request, res: Response, next: NextFunction) => {
+   try {
+      const bookingId  = req.params.id;
+      if (!bookingId) {
+         throw new ValidationError("Falta información requerida para cancelar una reserva.");
+      }
+      const booking = await BookingService.refundBooking(bookingId);
       res.status(200).json(booking);
    } catch (error) {
       next(error);

@@ -42,5 +42,5 @@ export interface CreateBookingDto {
   startTime: Date | string;
   endTime: Date | string;
   turns: number;
-  status?: 'booked' | 'completed' | 'cancelled';
+  status?: 'booked' | 'refunded' | 'cancelled';
 }

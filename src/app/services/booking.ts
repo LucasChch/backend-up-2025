@@ -146,6 +146,34 @@ export const cancelBooking = async (bookingId: string) => {
    return { response: message, bookingCancelled, updatedPayment };
 }
 
+export const refundBooking = async (bookingId: string) => {
+   // busco la reserva para ver si existe y su estado
+   const booking = await BookingRepository.getBookingById(bookingId);
+   if (!booking) {
+      throw new NotFoundError(`No se encontró la reserva con ID ${bookingId} para poder cancelarla.`);
+   }
+   if (booking.status === 'cancelled') {
+      return {
+         message: `La reserva con ID ${bookingId} ya se encontraba cancelada.`,
+         booking
+      };
+   }
+   // valido que la reserva haya sido pagada
+   const payment = await PaymentService.getPaymentByBookingId(bookingId);
+   if (!payment) {
+      throw new NotFoundError(`No se encontró el pago asociado a la reserva con ID ${bookingId}.`);
+   }
+   if (payment.status !== 'paid') {
+      throw new ValidationError(`La reserva con ID ${bookingId} no ha sido pagada.`);
+   }
+
+   // valido que la reserva haya sido pagada
+   const refund = Number(payment.total) * 0.5;
+   const updatedPayment = await PaymentService.updatePaymentStatus(payment._id.toString(), 'refundedPartial');
+   const bookingRefunded = await BookingRepository.refundBooking(bookingId);
+
+   return { response: "Se ha reintegrado el 50% del total de la reserva por el seguro de tormenta.", bookingRefunded, updatedPayment };
+}
 //me queda ver si turns lo paso al item interno o lo dejo en booking
 // hago endpoint que sea pago efectivo?
 // y otro para refundPorTormenta

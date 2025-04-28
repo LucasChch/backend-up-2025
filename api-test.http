@@ -30,6 +30,10 @@ Content-Type: application/json
 PATCH http://localhost:3000/booking/cancel/680ee924de569688e983deaf
 Content-Type: application/json
 
+### REFUND
+PATCH http://localhost:3000/booking/refund/6810001eb3aaa6af296bf38a
+Content-Type: application/json
+
 #--------------- Customer ---------------#
 ### GET BY ID
 GET http://localhost:3000/customer/68017a6de5f17517c3ff4ca1
