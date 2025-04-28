@@ -9,17 +9,17 @@ POST http://localhost:3000/booking
 Content-Type: application/json
 
 {
-      "customerId": "68031346e7c08857694d78a5",
-      "startTime": "Mon Apr 27 2025 23:35:00 GMT-0300",
+      "customerId": "680ff5e868f71cee4e34807b",
+      "startTime": "Mon Apr 29 2025 23:35:00 GMT-0300",
       "turns": "2",
-      "status": "booked",
-      "method": "card",
-      "amount": 20,
-      "currency": "USD",
+      //"status": "booked",
+      "method": "cash",
+      //"amount": 20,
+      //"currency": "USD",
       //"cancelDeadline": "2025-01-01T09:00:00Z",
       //"payDeadline": "2025-01-03T10:00:00Z",
       "items": [{
-            "productId": "68031346e7c08857694d78a8",
+            "productId": "680ff5e868f71cee4e34807d",
             "quantity": 1,
             "safetyItems": {"type": "chaleco", "quantity": 2},
             "peopleCount": 2
@@ -49,3 +49,14 @@ Content-Type: application/json
 ### GET ALL
 GET http://localhost:3000/payment
 Content-Type: application/json
+
+
+### PAY WITH CASH  (EL ID DEL BOOKING)
+POST http://localhost:3000/payment/payCash/6810001eb3aaa6af296bf38a
+Content-Type: application/json
+
+{
+      "amount": 20,
+      "currency": "USD",
+      "method": "cash"
+}

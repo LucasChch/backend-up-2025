@@ -34,7 +34,7 @@ export const payPaymentWithCash = async (req: Request, res: Response, next: Next
       }
 
       const reponse = await PaymentService.payPaymentWithCash(bookingId, paymentData)
-      res.status(200)
+      res.status(200).json(reponse);
    } catch (error) {
       next(error)
    }

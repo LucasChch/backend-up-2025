@@ -59,7 +59,7 @@ export const validateAmountPaid = async (amountPaid: number, total: number, curr
     }
 
     if (total > amountPaid) {
-        throw new ValidationError("El monto que paga el usuario es menor al total de la reserva.")
+        throw new ValidationError("El monto que paga el usuario es menor al total de la reserva. El total a pagar es $" + total + " ARS.");
     }
 
     return true;
@@ -76,15 +76,9 @@ export const payPaymentWithCash = async (bookingId: string, paymentData: CreateP
         throw new ValidationError("No se encontró el pago asociado a la reserva.");
     }
 
-    // dependiendo de la moneda que pague, hago la conversión
-    if (paymentData.currency === 'USD' || paymentData.currency === 'EUR') {
-        paymentData.amount = paymentData.amount * 1000;
+    const paidComplete = await validateAmountPaid(paymentData.amount, payment.total, paymentData.currency);
+
+    if (paidComplete) {
+        return await updatePaymentStatus(payment._id.toString(), 'paid');
     }
-
-    // valido que el monto a pagar por el usuario sea mayor al total de la reserva
-    if (payment.total > paymentData.amount) {
-        throw new ValidationError("El monto que paga el usuario es menor al total de la reserva.")
-    }
-
-
 }

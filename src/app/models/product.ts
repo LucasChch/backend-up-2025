@@ -23,7 +23,7 @@ const ProductSchema = new mongoose.Schema({
    },
    safetyRequiredType: {
       type: String,
-      enum: ['casco', 'chaleco'],
+      enum: ['chaleco', 'casco'],
    },
    stock: {
       type: Number,

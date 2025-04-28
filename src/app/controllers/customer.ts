@@ -16,6 +16,10 @@ export const getCustomerById = async (req: Request, res: Response, next: NextFun
       const id = req.params.id
       validateObjectId(id)
       const customer = await CustomerService.getCustomerById(id)
+      if (!customer) {
+         res.status(404).json({ message: "Cliente no encontrado" });
+         return;
+      }
       res.status(200).json(customer)
    } catch (error) {
       next(error);

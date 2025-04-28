@@ -31,7 +31,7 @@ const PaymentSchema = new mongoose.Schema({
    },
    currency: {
       type: String,
-      required: true,
+      required: function (this: any) { return this.method === 'card'; },
       enum: ['ARS', 'USD', 'EUR']
    },
    method: {
