@@ -27,7 +27,7 @@ Content-Type: application/json
 }
 
 ### CANCEL
-PATCH http://localhost:3000/booking/680eccf1bd96ba3ae18fa5c5/cancel
+PATCH http://localhost:3000/booking/680ee924de569688e983deaf/cancel
 Content-Type: application/json
 
 #--------------- Customer ---------------#

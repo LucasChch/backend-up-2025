@@ -9,7 +9,19 @@ const PaymentSchema = new mongoose.Schema({
    paidAt: {
       type: Date
    },
-   amount: {
+   total: {
+      type: Number,
+      required: true
+   },
+   subTotal: {
+      type: Number,
+      required: true
+   },
+   discountRate: {
+      type: Number,
+      required: true
+   },
+   discountAmt: {
       type: Number,
       required: true
    },
@@ -20,7 +32,7 @@ const PaymentSchema = new mongoose.Schema({
    currency: {
       type: String,
       required: true,
-      enum: ['ARS','USD', 'EUR']
+      enum: ['ARS', 'USD', 'EUR']
    },
    method: {
       type: String,
@@ -30,7 +42,7 @@ const PaymentSchema = new mongoose.Schema({
    status: {
       type: String,
       required: true,
-      enum: ['pending', 'paid', 'expired', 'refunded'],
+      enum: ['pending', 'paid', 'refundedTotal', 'refundedPartial'],
       default: 'pending'
    },
 });

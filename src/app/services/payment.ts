@@ -6,6 +6,10 @@ export const createPayment = async (paymentData: any) => {
     return await PaymentRepository.createPayment(paymentData);
 }
 
+export const getPaymentByBookingId = async (bookingId: string) => {
+    return await PaymentRepository.getPaymentByBookingId(bookingId);
+}
+
 export const getAllPayments = async () => {
     return await PaymentRepository.getAllPayments();
 }
@@ -56,4 +60,8 @@ export const validateAmountPaid = async (amountPaid: number, total: number, meth
     if (method === 'card' && total > amountPaid) {
         throw new ValidationError("El monto que paga el usuario es menor al total de la reserva.")
     }
+}
+
+export const updatePaymentStatus = async (paymentId: string, status: 'pending' | 'paid' | 'refundedTotal' | 'refundedPartial') => {
+    return await PaymentRepository.updatePaymentStatus(paymentId, status);
 }

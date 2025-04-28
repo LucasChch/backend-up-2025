@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 export interface CreatePaymentDto {
     method: 'card' | 'cash';
     amount: number | 0;
-    currency: 'ARS';
+    currency: 'ARS' | 'USD' | 'EUR';
 }
 
 export interface ProcessedPaymentDto extends CreatePaymentDto {
@@ -14,5 +14,5 @@ export interface ProcessedPaymentDto extends CreatePaymentDto {
     total: number;
     paidAt?: Date;
     dueDate?: Date;
-    status: 'pending' | 'paid' | 'expired' | 'refunded';
+    status: 'pending' | 'paid' | 'refundedTotal' | 'refundedPartial';
 }

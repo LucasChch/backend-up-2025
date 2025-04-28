@@ -91,6 +91,7 @@ export const cancelBooking = async (bookingId: string) => {
    // validación de cancelación de reserva
    // primero buscamos la reserva para verificar su estado actual
    const booking = await BookingRepository.getBookingById(bookingId);
+   const payment = await PaymentService.getPaymentByBookingId(bookingId);
 
    if (!booking) {
       throw new NotFoundError(`No se encontró la reserva con ID ${bookingId} para poder cancelarla.`);
@@ -107,12 +108,33 @@ export const cancelBooking = async (bookingId: string) => {
    // valido que la cancelación tenga por lo menos 2 horas antes que comience la reserva
    const now = new Date();
    const bookingCancelLimitTime = new Date(booking.startTime.getTime() - 2 * 60 * 60 * 1000) // limite de la cancelación son 2hs antes;
+   let message;
+   let updatedPayment;
 
+   // si la reserva se cancela con menos de 2hs de anticipación
    if (now > bookingCancelLimitTime) {
-      throw new ValidationError("La reserva no se puede cancelar con menos de 2hs de anticipación.");
+      // si la reserva a cancelar ya fue pagada
+      if (payment?.status === 'paid') {
+         const refund = Number(payment.total) * 0.5;
+         updatedPayment = await PaymentService.updatePaymentStatus(payment._id.toString(), 'refundedPartial');
+         message = "La reserva se está cancelando con menos de 2hs de anticipación. Por lo tanto, se reintegrará el 50% del total de la reserva. El total será: " + refund;
+      }
+      // si la reserva a cancelar no fue pagada todavía
+      else if (payment?.status === 'pending') {
+         updatedPayment = await PaymentService.updatePaymentStatus(payment._id.toString(), 'refundedPartial');
+         message = "La reserva se está cancelando con menos de 2hs de anticipación. Usted no ha efectuado el pago, pero se le cobrará el 50% de todas formas."
+      }
+      // si la reserva se cancela con más de 2hs de anticipación
+   } else {
+      if (payment) {
+         updatedPayment = await PaymentService.updatePaymentStatus(payment._id.toString(), 'refundedTotal');
+         message = "La reserva se está cancelando con más de 2hs de anticipación. Por lo tanto, no se le cobrará nada."
+      }
    }
 
-   return await BookingRepository.cancelBooking(bookingId);
+   const bookingCancelled = await BookingRepository.cancelBooking(bookingId);
+   return { response: message, bookingCancelled, updatedPayment };
 }
 
 //me queda ver si turns lo paso al item interno o lo dejo en booking
+// hago endpoint que sea pago efectivo?
