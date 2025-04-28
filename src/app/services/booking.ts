@@ -6,6 +6,10 @@ import { NotFoundError, ValidationError } from '../models/errors'
 import { CreateBookingDto } from '../interfaces/booking'
 import { CreatePaymentDto, ProcessedPaymentDto } from '../interfaces/payment'
 
+export const getAllBookings = async () => {
+   return await BookingRepository.getAllBookings();
+}
+
 export const createBooking = async (bookingData: CreateBookingDto, paymentData: CreatePaymentDto) => {
    // valido que exista el cliente que solicita la reserva
    const customer = await CustomerService.getCustomerById(bookingData.customerId)

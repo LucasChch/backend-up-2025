@@ -6,3 +6,7 @@ export const createPayment = async (paymentData: any) => {
     //Un ej seria status
     return await Payment.create(paymentData);
 }
+
+export const getAllPayments = async () => {
+    return await Payment.find();
+}

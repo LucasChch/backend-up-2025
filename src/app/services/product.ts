@@ -7,6 +7,10 @@ export const getProductById = async (productId: string) => {
    return await ProductRepository.getProductById(productId);
 }
 
+export const getAllProducts = async () => {
+   return await ProductRepository.getAllProducts();
+}
+
 export const validateProduct = async (product: Product, bookingItem: BookingItem) => {
    // Validar que haya personas a utilizar el producto
    if (!bookingItem.peopleCount || bookingItem.peopleCount < 1) {

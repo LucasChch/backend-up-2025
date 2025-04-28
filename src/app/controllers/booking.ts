@@ -4,6 +4,15 @@ import { ValidationError } from '../models/errors';
 import { CreateBookingDto } from '../interfaces/booking';
 import { CreatePaymentDto } from '../interfaces/payment';
 
+export const getAllBookings = async (req: Request, res: Response, next: NextFunction) => {
+   try {
+      const bookings = await BookingService.getAllBookings();
+      res.status(200).json(bookings);
+   } catch (error) {
+      next(error);
+   }
+}
+
 export const createBooking = async (req: Request, res: Response, next: NextFunction) => {
    try {
       const { customerId, turns, items, startTime } = req.body;

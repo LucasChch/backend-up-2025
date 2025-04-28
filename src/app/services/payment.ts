@@ -6,6 +6,10 @@ export const createPayment = async (paymentData: any) => {
     return await PaymentRepository.createPayment(paymentData);
 }
 
+export const getAllPayments = async () => {
+    return await PaymentRepository.getAllPayments();
+}
+
 export const calculatePaymentAmounts = async (bookingItems: any[], turns: number) => {
 
     // Inicializo las variables

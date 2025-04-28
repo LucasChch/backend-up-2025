@@ -10,6 +10,10 @@ export const getBookingById = async (bookingId: string) => {
    return booking;
 }
 
+export const getAllBookings = async () => {
+   return await Booking.find();
+}
+
 export const createBooking = async (bookingData: any) => {
    const booking = new Booking(bookingData);
    return await booking.save();

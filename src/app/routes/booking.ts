@@ -1,8 +1,9 @@
 import Router from "express";
-import { createBooking, cancelBooking } from "../controllers/booking";
+import { getAllBookings, createBooking, cancelBooking } from "../controllers/booking";
 
 const router = Router();
 
+router.get('/', getAllBookings)
 router.post('/', createBooking);
 router.patch('/:id/cancel', cancelBooking);
 
