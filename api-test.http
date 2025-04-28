@@ -1,4 +1,6 @@
-### Booking
+#--------------- Booking ---------------#
+
+###CREATE
 POST http://localhost:3000/booking
 Content-Type: application/json
 
@@ -20,7 +22,11 @@ Content-Type: application/json
       }]
 }
 
+### CANCEL
+PATCH http://localhost:3000/booking/680ec74b5dd6b961a6778b9a/cancel
+Content-Type: application/json
 
-### Customer
+#--------------- Customer ---------------#
+### GET
 GET http://localhost:3000/customer/68017a6de5f17517c3ff4ca1
 Content-Type: application/json

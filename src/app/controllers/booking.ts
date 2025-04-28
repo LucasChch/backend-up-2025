@@ -39,10 +39,14 @@ export const createBooking = async (req: Request, res: Response, next: NextFunct
 }
 
 
-//TODO:
 export const cancelBooking = async (req: Request, res: Response, next: NextFunction) => {
    try {
-      res.status(400).json('Falta Implementacion')
+      const bookingId  = req.params.id;
+      if (!bookingId) {
+         throw new ValidationError("Falta información requerida para cancelar una reserva.");
+      }
+      const booking = await BookingService.cancelBooking(bookingId);
+      res.status(200).json(booking);
    } catch (error) {
       next(error);
    }

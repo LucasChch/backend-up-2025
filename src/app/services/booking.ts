@@ -82,5 +82,8 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
    }
 }
 
+export const cancelBooking = async (bookingId: string) => {
+   return await BookingRepository.cancelBooking(bookingId);
+}
 
 //me queda ver si turns lo paso al item interno o lo dejo en booking
