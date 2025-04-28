@@ -2,6 +2,14 @@ import Booking from '../models/booking';
 import mongoose, { Types } from 'mongoose';
 import { NotFoundError } from '../models/errors';
 
+export const getBookingById = async (bookingId: string) => {
+   const booking = await Booking.findById(bookingId);
+   if (!booking) {
+      throw new NotFoundError("No se encontró la reserva con el ID proporcionado.");
+   }
+   return booking;
+}
+
 export const createBooking = async (bookingData: any) => {
    const booking = new Booking(bookingData);
    return await booking.save();
@@ -44,37 +52,15 @@ export const deleteBooking = async (bookingId: Types.ObjectId) => {
 }
 
 export const cancelBooking = async (bookingId: string) => {
-   
-      // Primero buscamos la reserva para verificar su estado actual
-      const booking = await Booking.findById(bookingId);
-   
-      if (!booking) {
-         throw new NotFoundError(`No se encontró la reserva con ID ${bookingId} para poder cancelarla.`);
-      }
-      
-      // Verificamos si ya está cancelada
-      if (booking.status === 'cancelled') {
-         return { 
-            message: `La reserva con ID ${bookingId} ya se encontraba cancelada.`,
-            booking 
-         };
-      }
-      
-      // Si no está cancelada, procedemos a cancelarla
-      booking.status = 'cancelled';
-      await booking.save();
-      
-      return booking;
 
-   //OPCION 2 CON findByIdAndUpdate
-   // const updatedBooking = await Booking.findByIdAndUpdate(
-   //    bookingId,
-   //    { status: 'cancelled' },
-   //    { new: true, runValidators: true }
-   // );
+   const updatedBooking = await Booking.findByIdAndUpdate(
+      bookingId,
+      { status: 'cancelled' },
+      { new: true, runValidators: true }
+   );
 
-   // if (!updatedBooking) {
-   //    throw new NotFoundError(`No se encontró la reserva con ID ${bookingId} para poder cancelarla.`);
-   // }
-   // return updatedBooking;
+   if (!updatedBooking) {
+      throw new NotFoundError(`No se encontró la reserva con ID ${bookingId} para poder cancelarla.`);
+   }
+   return updatedBooking;
 }

@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
       "customerId": "68031346e7c08857694d78a5",
-      "startTime": "Mon Apr 28 2025 07:00:00 GMT-0300",
+      "startTime": "Mon Apr 27 2025 23:35:00 GMT-0300",
       "turns": "2",
       "status": "booked",
       "method": "card",
@@ -23,7 +23,7 @@ Content-Type: application/json
 }
 
 ### CANCEL
-PATCH http://localhost:3000/booking/680ec74b5dd6b961a6778b9a/cancel
+PATCH http://localhost:3000/booking/680eccf1bd96ba3ae18fa5c5/cancel
 Content-Type: application/json
 
 #--------------- Customer ---------------#

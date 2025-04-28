@@ -83,6 +83,31 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
 }
 
 export const cancelBooking = async (bookingId: string) => {
+
+   // validación de cancelación de reserva
+   // primero buscamos la reserva para verificar su estado actual
+   const booking = await BookingRepository.getBookingById(bookingId);
+
+   if (!booking) {
+      throw new NotFoundError(`No se encontró la reserva con ID ${bookingId} para poder cancelarla.`);
+   }
+
+   // verificamos si ya está cancelada
+   if (booking.status === 'cancelled') {
+      return {
+         message: `La reserva con ID ${bookingId} ya se encontraba cancelada.`,
+         booking
+      };
+   }
+
+   // valido que la cancelación tenga por lo menos 2 horas antes que comience la reserva
+   const now = new Date();
+   const bookingCancelLimitTime = new Date(booking.startTime.getTime() - 2 * 60 * 60 * 1000) // limite de la cancelación son 2hs antes;
+
+   if (now > bookingCancelLimitTime) {
+      throw new ValidationError("La reserva no se puede cancelar con menos de 2hs de anticipación.");
+   }
+
    return await BookingRepository.cancelBooking(bookingId);
 }
 
