@@ -34,7 +34,7 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
       // valido que el producto tenga stock suficiente para la cantidad y fecha solicitada
       const totalReserved = await BookingRepository.getReservedCount(bookingData.items[0].productId, bookingData.startTime, bookingData.endTime);
       if (totalReserved + item.quantity > product.stock) {
-         throw new ValidationError(`El producto ${item.productId} no tiene suficiente stock para la cantidad solicitada.`);
+         throw new ValidationError(`El producto ${product.name} no tiene suficiente stock para la cantidad solicitada.`);
       }
    }
    // valido que booking solo puede ser reservado hasta 48hs antes de la fecha de inicio
@@ -65,7 +65,7 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
       } = await PaymentService.calculatePaymentAmounts(newBooking.items);
 
       // valido que si paga con tarjeta tiene que haber monto
-      if (paymentData.method === 'card' && paymentData.amount === 0) {
+      if (paymentData.method === 'card' && !paymentData.amount) {
          throw new ValidationError("Si esta reservando con tarjeta debe pagar el monto total");
       }
       // valido que el monto que paga el usuario sea mayor al total de la reserva

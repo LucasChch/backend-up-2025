@@ -9,28 +9,29 @@ POST http://localhost:3000/booking
 Content-Type: application/json
 
 {
-      "customerId": "680ff5e868f71cee4e34807b",
-      "startTime": "Mon Apr 29 2025 10:10:00 GMT-0300",
+      "customerId": "68031346e7c08857694d78a5",
+      "startTime": "Mon Apr 30 2025 10:10:00 GMT-0300",
       "totalTurns": 3,
-      "method": "cash",
+      "method": "card",
+      "currency": "USD",
       "items": [{
-            "productId": "680ff5e868f71cee4e34807d",
+            "productId": "68031346e7c08857694d78ab",
             "quantity": 1,
             "turns": 2,
-            "safetyItems": {"type": "chaleco", "quantity": 2},
-            "peopleCount": 2
+            //"safetyItems": {"type": "chaleco", "quantity": 2},
+            "peopleCount": 1
       },
       {
-            "productId": "680ff5e868f71cee4e34807e",
+            "productId": "68031346e7c08857694d78ac",
             "quantity": 1,
             "turns": 1,
-            "safetyItems": {"type": "casco", "quantity": 2},
-            "peopleCount": 2
+            //"safetyItems": {"type": "casco", "quantity": 2},
+            "peopleCount": 1
       }]
 }
 
 ### CANCEL
-PATCH http://localhost:3000/booking/cancel/680ee924de569688e983deaf
+PATCH http://localhost:3000/booking/cancel/68103afefe7a10689c71f946
 Content-Type: application/json
 
 ### REFUND
@@ -45,7 +46,6 @@ Content-Type: application/json
 ### GET ALL
 GET http://localhost:3000/customer
 Content-Type: application/json
-
 
 #--------------- Products ---------------#
 ### GET ALL

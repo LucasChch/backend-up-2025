@@ -25,7 +25,11 @@ export const validateProduct = async (product: Product, bookingItem: BookingItem
 
    // Validar que si el producto requiere elementos de seguridad, se hayan proporcionado
    if (product.requiresSafety && !bookingItem.safetyItems) {
-      throw new ValidationError(`El producto ${bookingItem.productId} requiere elementos de seguridad y no se han proporcionado.`);
+      throw new ValidationError(`El producto ${product.name} requiere elementos de seguridad y no se han proporcionado.`);
+   }
+   else if (!product.requiresSafety && bookingItem.safetyItems)
+   {
+      throw new ValidationError(`El producto ${product.name} no requiere elementos de seguridad y se han proporcionado.`);
    }
 
    if (bookingItem.safetyItems) {

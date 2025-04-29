@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 
 export interface CreatePaymentDto {
     method: 'card' | 'cash';
-    amount: number | 0;
+    amount: number;
     currency: 'ARS' | 'USD' | 'EUR';
 }
 
