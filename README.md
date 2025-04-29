@@ -257,13 +257,13 @@ Esta sección describe comportamientos clave y validaciones que implementa el si
 - Se puede pagar con cualquier moneda, es indistinto.
 - Si se reservan 2 o más  productos **distintos** hay un 10% de descuento.
 
-### ❌ Cancelaciones
+### ❌ Cancelaciones (`/booking/cancel`)
 
 - Las reservas con estado que se cancelen con una anticipación de 2 horas antes del inicio del turno, se les devolverá el 100% de la reserva (`refundedTotal`).
 - Las reservas reembolsadas cambian su estado a `refunded`.
 
 
-### ⛈️Reembolsos por tormenta
+### ⛈️Reembolsos por tormenta (`/booking/refund`)
 - En el caso de pedir reembolso por tormenta, se valida que la reserva haya sido pagada, y se re reembolsa el 50% de la reserva.
 ---
 ## 📥 Carga inicial de datos
