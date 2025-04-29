@@ -18,7 +18,7 @@ Este proyecto es una API backend desarrollada en **Node.js con TypeScript** que 
 
 ## 📦 Requisitos previos
 
-Asegurate de tener instalados:
+Asegurate de tener:
 
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
@@ -257,7 +257,7 @@ Esta sección describe comportamientos clave y validaciones que implementa el si
 - Se puede pagar con cualquier moneda, es indistinto.
 - Si se reservan 2 o más  productos **distintos** hay un 10% de descuento.
 
-### ❌ Cancelaciones y Reembolsos
+### ❌ Cancelaciones
 
 - Las reservas con estado que se cancelen con una anticipación de 2 horas antes del inicio del turno, se les devolverá el 100% de la reserva (`refundedTotal`).
 - Las reservas reembolsadas cambian su estado a `refunded`.
