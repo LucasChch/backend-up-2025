@@ -21,15 +21,17 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
 
    // valido que la cantidad de turnos de los productos no supere el máximo permitido y sea igual al total de la reserva 
    await ProductService.validateTurns(bookingData.items, bookingData.totalTurns);
+
    // valido que los productos que solicita en la reserva existan
    for (const item of bookingData.items) {
       const product = await ProductService.getProductById(item.productId)
       if (!product) {
          throw new NotFoundError(`El producto ${item.productId} no existe.`)
       }
-      // validaciones de producto
+      // validaciones propias de cada producto
       await ProductService.validateProduct(product, item);
 
+      // valido que el producto tenga stock suficiente para la cantidad y fecha solicitada
       const totalReserved = await BookingRepository.getReservedCount(bookingData.items[0].productId, bookingData.startTime, bookingData.endTime);
       if (totalReserved + item.quantity > product.stock) {
          throw new ValidationError(`El producto ${item.productId} no tiene suficiente stock para la cantidad solicitada.`);
@@ -51,6 +53,7 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
 
    let newBooking;
    try {
+      // CREACIÓN DE LA RESERVA
       newBooking = await BookingRepository.createBooking(bookingData);
 
       // VALIDACIONES Y CREACIÓN DEL PAGO
@@ -72,8 +75,6 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
          paidComplete = await PaymentService.validateAmountPaid(paymentData.amount, total, paymentData.currency);
       }
 
-      // CON ESTO LO QUE HICE FUE PODER CREAR BOOKING PAGANDO CON EFECTIVO
-
       const processedPaymentData: ProcessedPaymentDto = {
          ...paymentData,
          bookingId: newBooking._id,
@@ -81,9 +82,9 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
          discountRate,
          discountAmt,
          total,
-         paidAt: paidComplete ? new Date() : undefined,//paymentData.method === 'card' ? new Date() : undefined,
-         dueDate: !paidComplete ? new Date(newBooking.startTime.getTime() - 2 * 60 * 60 * 1000) : undefined,//paymentData.method === 'cash' ? new Date(newBooking.startTime.getTime() - 2 * 60 * 60 * 1000) : undefined, //tiene que ser hasta 2 horas antes de booking.startTime
-         status: paidComplete ? 'paid' : 'pending' //paymentData.method === 'card' ? 'paid' : 'pending',
+         paidAt: paidComplete ? new Date() : undefined,
+         dueDate: !paidComplete ? new Date(newBooking.startTime.getTime() - 2 * 60 * 60 * 1000) : undefined,
+         status: paidComplete ? 'paid' : 'pending'
       }
       const payment = await PaymentService.createPayment(processedPaymentData)
 
@@ -174,6 +175,5 @@ export const refundBooking = async (bookingId: string) => {
    const updatedPayment = await PaymentService.updatePaymentStatus(payment._id.toString(), 'refundedPartial');
    const bookingRefunded = await BookingRepository.refundBooking(bookingId);
 
-   return { response: "Se ha reintegrado el 50% del total de la reserva por el seguro de tormenta.", bookingRefunded, updatedPayment };
+   return { response: "Se ha reintegrado el 50% del total de la reserva $"+ updatedPayment.subTotal * 0.5 +" ARS por el seguro de tormenta.", bookingRefunded, updatedPayment };
 }
-//me queda ver si turns lo paso al item interno o lo dejo en booking

@@ -10,14 +10,21 @@ Content-Type: application/json
 
 {
       "customerId": "680ff5e868f71cee4e34807b",
-      "startTime": "Mon Apr 29 2025 23:35:00 GMT-0300",
-      "totalTurns": 2,
+      "startTime": "Mon Apr 29 2025 10:10:00 GMT-0300",
+      "totalTurns": 3,
       "method": "cash",
       "items": [{
             "productId": "680ff5e868f71cee4e34807d",
             "quantity": 1,
             "turns": 2,
             "safetyItems": {"type": "chaleco", "quantity": 2},
+            "peopleCount": 2
+      },
+      {
+            "productId": "680ff5e868f71cee4e34807e",
+            "quantity": 1,
+            "turns": 1,
+            "safetyItems": {"type": "casco", "quantity": 2},
             "peopleCount": 2
       }]
 }
@@ -27,12 +34,12 @@ PATCH http://localhost:3000/booking/cancel/680ee924de569688e983deaf
 Content-Type: application/json
 
 ### REFUND
-PATCH http://localhost:3000/booking/refund/6810001eb3aaa6af296bf38a
+PATCH http://localhost:3000/booking/refund/68101a8afb6e7118511ee6e7
 Content-Type: application/json
 
 #--------------- Customer ---------------#
 ### GET BY ID
-GET http://localhost:3000/customer/68017a6de5f17517c3ff4ca1
+GET http://localhost:3000/customer/681028ca75b4f6bf749831bb
 Content-Type: application/json
 
 ### GET ALL
@@ -52,11 +59,11 @@ Content-Type: application/json
 
 
 ### PAY WITH CASH  (EL ID DEL BOOKING)
-POST http://localhost:3000/payment/payCash/6810001eb3aaa6af296bf38a
+POST http://localhost:3000/payment/payCash/68101a8afb6e7118511ee6e7
 Content-Type: application/json
 
 {
-      "amount": 20,
+      "amount": 22.5,
       "currency": "USD",
       "method": "cash"
 }

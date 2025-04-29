@@ -22,7 +22,7 @@ export const createBooking = async (req: Request, res: Response, next: NextFunct
       }
 
       if (totalTurns < 1 || totalTurns > 3) {
-         throw new ValidationError("El número de turnos debe ser entre 1 y 3.");
+         throw new ValidationError("El total de turnos debe ser entre 1 y 3.");
       }
 
       const bookingData: CreateBookingDto = {
