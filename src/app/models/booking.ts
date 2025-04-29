@@ -8,6 +8,7 @@ const safetyItemSchema = new mongoose.Schema({
 const bookingItemSchema = new mongoose.Schema({
    productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
    quantity: { type: Number, default: 1 },
+   turns: { type: Number, default: 1, min: 1, max: 3 },
    safetyItems: { safetyItemSchema },
    peopleCount: {
       type: Number,
@@ -39,7 +40,7 @@ const BookingSchema = new mongoose.Schema({
       type: Date,
       required: true
    },
-   turns: {
+   totalTurns: {
       type: Number,
       required: true,
       min: 1,
@@ -49,13 +50,7 @@ const BookingSchema = new mongoose.Schema({
       type: String,
       enum: ['booked', 'refunded', 'cancelled'],
       default: 'booked'
-   },
-   // cancelDeadline: {
-   //    type: Date
-   // },
-   // payDeadline: {
-   //    type: Date,
-   // },
+   }
 });
 
 export default mongoose.model("Booking", BookingSchema);

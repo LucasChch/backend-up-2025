@@ -10,6 +10,7 @@ export interface BookingItem {
   quantity: number;
   safetyItems?: SafetyItem;
   peopleCount: number;
+  turns: 1 | 2 | 3;
 }
 
 // export interface Booking extends Document {
@@ -33,6 +34,7 @@ export interface CreateBookingDto {
   items: {
     productId: string;
     quantity: number;
+    turns: 1 | 2 | 3;
     safetyItems?: {
       type: 'casco' | 'chaleco';
       quantity: number;
@@ -41,6 +43,6 @@ export interface CreateBookingDto {
   }[];
   startTime: Date | string;
   endTime: Date | string;
-  turns: number;
+  totalTurns: number;
   status?: 'booked' | 'refunded' | 'cancelled';
 }

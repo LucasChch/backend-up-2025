@@ -19,6 +19,8 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
 
    // VALIDACIONES DE PRODUCTOS
 
+   // valido que la cantidad de turnos de los productos no supere el máximo permitido y sea igual al total de la reserva 
+   await ProductService.validateTurns(bookingData.items, bookingData.totalTurns);
    // valido que los productos que solicita en la reserva existan
    for (const item of bookingData.items) {
       const product = await ProductService.getProductById(item.productId)
@@ -57,7 +59,7 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
          discountRate,
          discountAmt,
          total
-      } = await PaymentService.calculatePaymentAmounts(newBooking.items, newBooking.turns);
+      } = await PaymentService.calculatePaymentAmounts(newBooking.items);
 
       // valido que si paga con tarjeta tiene que haber monto
       if (paymentData.method === 'card' && paymentData.amount === 0) {
@@ -175,5 +177,3 @@ export const refundBooking = async (bookingId: string) => {
    return { response: "Se ha reintegrado el 50% del total de la reserva por el seguro de tormenta.", bookingRefunded, updatedPayment };
 }
 //me queda ver si turns lo paso al item interno o lo dejo en booking
-// hago endpoint que sea pago efectivo?
-// y otro para refundPorTormenta

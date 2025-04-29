@@ -15,7 +15,7 @@ export const getAllPayments = async () => {
     return await PaymentRepository.getAllPayments();
 }
 
-export const calculatePaymentAmounts = async (bookingItems: any[], turns: number) => {
+export const calculatePaymentAmounts = async (bookingItems: any[]) => {
 
     // Inicializo las variables
     let subTotal = 0;
@@ -30,7 +30,7 @@ export const calculatePaymentAmounts = async (bookingItems: any[], turns: number
             if (!product) {
                 throw new Error(`El producto ${item.productId} no existe.`);
             }
-            subTotal += product.pricePerTurn * item.quantity * turns; // precio del producto por la cantidad de items alquilado por la cantidad de turnos
+            subTotal += product.pricePerTurn * item.quantity * item.turns; // precio del producto por la cantidad de items alquilado por la cantidad de turnos
         }
 
         if (discountRate > 0) {

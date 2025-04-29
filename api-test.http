@@ -11,16 +11,12 @@ Content-Type: application/json
 {
       "customerId": "680ff5e868f71cee4e34807b",
       "startTime": "Mon Apr 29 2025 23:35:00 GMT-0300",
-      "turns": "2",
-      //"status": "booked",
+      "totalTurns": 2,
       "method": "cash",
-      //"amount": 20,
-      //"currency": "USD",
-      //"cancelDeadline": "2025-01-01T09:00:00Z",
-      //"payDeadline": "2025-01-03T10:00:00Z",
       "items": [{
             "productId": "680ff5e868f71cee4e34807d",
             "quantity": 1,
+            "turns": 2,
             "safetyItems": {"type": "chaleco", "quantity": 2},
             "peopleCount": 2
       }]

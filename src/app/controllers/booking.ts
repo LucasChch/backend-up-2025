@@ -15,13 +15,13 @@ export const getAllBookings = async (req: Request, res: Response, next: NextFunc
 
 export const createBooking = async (req: Request, res: Response, next: NextFunction) => {
    try {
-      const { customerId, turns, items, startTime } = req.body;
+      const { customerId, totalTurns, items, startTime } = req.body;
 
-      if (!customerId || !turns || !items || !startTime) {
+      if (!customerId || !totalTurns || !items || !startTime) {
          throw new ValidationError("Falta información requerida para dar de alta una reserva.");
       }
 
-      if (turns < 1 || turns > 3) {
+      if (totalTurns < 1 || totalTurns > 3) {
          throw new ValidationError("El número de turnos debe ser entre 1 y 3.");
       }
 
@@ -29,8 +29,8 @@ export const createBooking = async (req: Request, res: Response, next: NextFunct
          customerId,
          items,
          startTime: new Date(startTime),
-         endTime: new Date(new Date(startTime).getTime() + turns * 30 * 60 * 1000), // 30 minutos por turno
-         turns,
+         endTime: new Date(new Date(startTime).getTime() + totalTurns * 30 * 60 * 1000), // 30 minutos por turno
+         totalTurns,
          status: 'booked',
       }
 

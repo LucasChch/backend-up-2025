@@ -49,3 +49,17 @@ export const validateProduct = async (product: Product, bookingItem: BookingItem
    }
 
 }
+
+export const validateTurns = async (products: BookingItem[], totalTurns: number) => {
+
+   let totalReserved = 0;
+   for (const product of products) {
+      if (product.turns < 1 || product.turns > 3) {
+         throw new ValidationError(`El producto ${product.productId} solo puede ser reservado por 1, 2 o 3 turnos.`);
+      }
+      totalReserved += product.turns;
+   }
+   if (totalReserved !== totalTurns) {
+      throw new ValidationError(`La cantidad de turnos solicitados no coincide con la cantidad de turnos de los productos.`);
+   }
+}
