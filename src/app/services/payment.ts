@@ -86,7 +86,6 @@ export const payPaymentWithCash = async (bookingId: string, paymentData: CreateP
         const now = new Date();
         const diff = payment.dueDate.getTime() - now.getTime();
         const diffHours = Math.ceil(diff / (1000 * 60 * 60));
-        console.log("diffHours", diffHours);
         if (diffHours < 2) {
             await BookingService.updateBookingStatus(bookingId, 'cancelled');
             throw new ValidationError("No se puede pagar la reserva con menos de 2 horas de anticipación.");
