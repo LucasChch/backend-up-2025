@@ -45,6 +45,9 @@ export const validateProduct = async (product: Product, bookingItem: BookingItem
       if (bookingItem.safetyItems.quantity < requiredQuantity) {
          throw new ValidationError(`Faltan elementos de seguridad tipo ${requiredType} para el producto ${product.name}. Se requieren ${requiredQuantity}, pero se proporcionaron ${bookingItem.safetyItems.quantity}.`);
       }
+      else if (bookingItem.safetyItems.quantity > requiredQuantity) {
+         throw new ValidationError(`Se proporcionaron demasiados elementos de seguridad tipo ${requiredType} para el producto ${product.name}. Se requieren ${requiredQuantity}, pero se proporcionaron ${bookingItem.safetyItems.quantity}.`);
+      }
    };
 
    // Validar que haya stock suficiente del producto

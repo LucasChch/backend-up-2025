@@ -9,20 +9,20 @@ POST http://localhost:3000/booking
 Content-Type: application/json
 
 {
-      "customerId": "68031346e7c08857694d78a5",
+      "customerId": "6810d1f66e80504554f7aee8",
       "startTime": "Mon Apr 30 2025 10:10:00 GMT-0300",
       "totalTurns": 3,
       "method": "card",
       "currency": "USD",
       "items": [{
-            "productId": "68031346e7c08857694d78ab",
+            "productId": "6810d1f66e80504554f7aeeb",
             "quantity": 1,
             "turns": 2,
-            //"safetyItems": {"type": "chaleco", "quantity": 2},
+            "safetyItems": {"type": "casco", "quantity": 2},
             "peopleCount": 1
       },
       {
-            "productId": "68031346e7c08857694d78ac",
+            "productId": "6810d1f66e80504554f7aeee",
             "quantity": 1,
             "turns": 1,
             //"safetyItems": {"type": "casco", "quantity": 2},
