@@ -1,5 +1,3 @@
-import { Document, Types } from 'mongoose';
-
 export interface SafetyItem {
   type: 'casco' | 'chaleco';
   quantity: number;
@@ -12,22 +10,6 @@ export interface BookingItem {
   peopleCount: number;
   turns: 1 | 2 | 3;
 }
-
-// export interface Booking extends Document {
-//   customerId: Types.ObjectId;
-//   items: BookingItem[];
-//   createdAt: Date;
-//   startTime: Date;
-//   endTime: Date,
-//   turns: number;
-//   subTotal: number;
-//   discountRate: number;
-//   discountAmt: number;
-//   total: number;
-//   status: 'booked' | 'completed' | 'cancelled';
-//   cancelDeadline?: Date;
-//   payDeadline?: Date;
-// }
 
 export interface CreateBookingDto {
   customerId: string;

@@ -28,3 +28,16 @@ export const updatePaymentStatus = async (paymentId: string, status: 'pending' |
     }
     return updatedPayment;
 }
+
+export const updatePaymentCurrency = async (paymentId: string, currency: 'ARS' | 'USD' | 'EUR') => {
+    const updatedPayment = await Payment.findByIdAndUpdate(
+        paymentId,
+        { currency: currency },
+        { new: true, runValidators: true }
+    );
+
+    if (!updatedPayment) {
+        throw new NotFoundError(`No se encontró la reserva con ID ${paymentId} para poder cancelarla.`);
+    }
+    return updatedPayment;
+}

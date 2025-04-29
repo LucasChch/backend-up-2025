@@ -14,6 +14,10 @@ export const getAllBookings = async () => {
    return await Booking.find();
 }
 
+export const getBookingsByCustomerId = async (customerId: string) => {
+   return await Booking.find({'customerId': customerId});
+}
+
 export const createBooking = async (bookingData: any) => {
    const booking = new Booking(bookingData);
    return await booking.save();
@@ -77,6 +81,18 @@ export const refundBooking = async (bookingId: string) => {
    );
    if (!updatedBooking) {
       throw new NotFoundError(`No se encontró la reserva con ID ${bookingId} para poder reembolsarla.`);
+   }
+   return updatedBooking;
+}
+
+export const updateBookingStatus = async (bookingId: string, status: 'cancelled' | 'refunded') => {
+   const updatedBooking = await Booking.findByIdAndUpdate(
+      bookingId,
+      { status: status },
+      { new: true, runValidators: true }
+   );
+   if (!updatedBooking) {
+      throw new NotFoundError(`No se encontró la reserva con ID ${bookingId} para poder ${status}.`);
    }
    return updatedBooking;
 }

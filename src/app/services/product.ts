@@ -27,8 +27,7 @@ export const validateProduct = async (product: Product, bookingItem: BookingItem
    if (product.requiresSafety && !bookingItem.safetyItems) {
       throw new ValidationError(`El producto ${product.name} requiere elementos de seguridad y no se han proporcionado.`);
    }
-   else if (!product.requiresSafety && bookingItem.safetyItems)
-   {
+   else if (!product.requiresSafety && bookingItem.safetyItems) {
       throw new ValidationError(`El producto ${product.name} no requiere elementos de seguridad y se han proporcionado.`);
    }
 
@@ -44,6 +43,9 @@ export const validateProduct = async (product: Product, bookingItem: BookingItem
       const requiredQuantity = bookingItem.peopleCount;
       if (bookingItem.safetyItems.quantity < requiredQuantity) {
          throw new ValidationError(`Faltan elementos de seguridad tipo ${requiredType} para el producto ${product.name}. Se requieren ${requiredQuantity}, pero se proporcionaron ${bookingItem.safetyItems.quantity}.`);
+      }
+      else if (bookingItem.safetyItems.quantity > requiredQuantity) {
+         throw new ValidationError(`Se proporcionaron demasiados elementos de seguridad tipo ${requiredType} para el producto ${product.name}. Se requieren ${requiredQuantity}, pero se proporcionaron ${bookingItem.safetyItems.quantity}.`);
       }
    };
 

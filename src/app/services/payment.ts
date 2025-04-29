@@ -2,6 +2,7 @@ import { CreatePaymentDto } from '../interfaces/payment';
 import { ValidationError } from '../models/errors';
 import * as PaymentRepository from '../repositories/payment';
 import * as ProductService from '../services/product';
+import * as BookingService from '../services/booking'
 
 export const createPayment = async (paymentData: any) => {
     return await PaymentRepository.createPayment(paymentData);
@@ -76,9 +77,26 @@ export const payPaymentWithCash = async (bookingId: string, paymentData: CreateP
         throw new ValidationError("No se encontró el pago asociado a la reserva.");
     }
 
+    const booking = await BookingService.getBookingById(bookingId);
+    if (!booking) {
+        throw new ValidationError("No se encontró la reserva asociada al pago.");
+    }
+    // valido que si el pago se está efectuando con menos de dos horas de anticipación no se pueda pagar, utilizo dueDate
+    if (payment.dueDate) {
+        const now = new Date();
+        const diff = payment.dueDate.getTime() - now.getTime();
+        const diffHours = Math.ceil(diff / (1000 * 60 * 60));
+        console.log("diffHours", diffHours);
+        if (diffHours < 2) {
+            await BookingService.updateBookingStatus(bookingId, 'cancelled');
+            throw new ValidationError("No se puede pagar la reserva con menos de 2 horas de anticipación.");
+        }
+    }
+
     const paidComplete = await validateAmountPaid(paymentData.amount, payment.total, paymentData.currency);
 
     if (paidComplete) {
+        await PaymentRepository.updatePaymentCurrency(payment._id.toString(), paymentData.currency);
         return await updatePaymentStatus(payment._id.toString(), 'paid');
     }
 }

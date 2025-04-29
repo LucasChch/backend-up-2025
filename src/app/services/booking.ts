@@ -10,6 +10,10 @@ export const getAllBookings = async () => {
    return await BookingRepository.getAllBookings();
 }
 
+export const getBookingById = async (booking_id: string) =>{
+   return await BookingRepository.getBookingById(booking_id);
+}
+
 export const createBooking = async (bookingData: CreateBookingDto, paymentData: CreatePaymentDto) => {
    // valido que exista el cliente que solicita la reserva
    const customer = await CustomerService.getCustomerById(bookingData.customerId)
@@ -17,6 +21,18 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
       throw new NotFoundError("El cliente que quiere hacer la reserva no existe.")
    }
 
+   // valido que el cliente pueda tener activo solo 3 turnos totales activos entre todas las reservas
+   const existingBookings = await BookingRepository.getBookingsByCustomerId(bookingData.customerId)
+   if (existingBookings) {
+      let totalTurnsAccumulated = 0;
+      for (const booking of existingBookings) {
+         totalTurnsAccumulated += booking.totalTurns;
+      }
+      if (totalTurnsAccumulated + bookingData.totalTurns > 3) {
+         throw new ValidationError("El cliente no puede tener más de 3 turnos activos en total.");
+      }
+
+   }
    // VALIDACIONES DE PRODUCTOS
 
    // valido que la cantidad de turnos de los productos no supere el máximo permitido y sea igual al total de la reserva 
@@ -98,6 +114,9 @@ export const createBooking = async (bookingData: CreateBookingDto, paymentData: 
       throw error;
    }
 }
+export const updateBookingStatus = async (bookingId: string, status: 'cancelled' | 'refunded') => {
+   return await BookingRepository.updateBookingStatus(bookingId, status);
+}
 
 export const cancelBooking = async (bookingId: string) => {
 
@@ -175,5 +194,5 @@ export const refundBooking = async (bookingId: string) => {
    const updatedPayment = await PaymentService.updatePaymentStatus(payment._id.toString(), 'refundedPartial');
    const bookingRefunded = await BookingRepository.refundBooking(bookingId);
 
-   return { response: "Se ha reintegrado el 50% del total de la reserva $"+ updatedPayment.subTotal * 0.5 +" ARS por el seguro de tormenta.", bookingRefunded, updatedPayment };
+   return { response: "Se ha reintegrado el 50% del total de la reserva $" + updatedPayment.subTotal * 0.5 + " ARS por el seguro de tormenta.", bookingRefunded, updatedPayment };
 }
