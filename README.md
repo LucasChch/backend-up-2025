@@ -43,7 +43,7 @@ cp .env-example .env
 ### 3. Levantá los servicios con Docker Compose
 
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
 ---
 
