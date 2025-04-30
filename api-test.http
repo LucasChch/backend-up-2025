@@ -9,20 +9,20 @@ POST http://localhost:3000/booking
 Content-Type: application/json
 
 {
-      "customerId": "681161a9f70f0b84627bbd43",
+      "customerId": "681161a9f70f0b84627bbd43", // MODIFICAR POR EL ID DEL CLIENTE
       "startTime": "Mon May 01 2025 19:46:00 GMT-0300",
       "totalTurns": 3,
       "method": "cash",
       "currency": "USD",
       "items": [{
-            "productId": "68115e26f70f0b84627bbd3d",
+            "productId": "68115e26f70f0b84627bbd3d", // MODIFICAR POR EL ID DEL PRODUCTO
             "quantity": 1,
             "turns": 2,
             "safetyItems": {"type": "chaleco", "quantity": 2},
             "peopleCount": 2
       },
       {
-            "productId": "68115e26f70f0b84627bbd41",
+            "productId": "68115e26f70f0b84627bbd41", // MODIFICAR POR EL ID DEL PRODUCTO
             "quantity": 1,
             "turns": 1,
             //"safetyItems": {"type": "casco", "quantity": 2},
@@ -30,11 +30,11 @@ Content-Type: application/json
       }]
 }
 
-### CANCEL (CANCELAR RESERVA)
+### CANCEL (CANCELAR RESERVA) --- ID DE LA RESERVA
 PATCH http://localhost:3000/booking/cancel/68103afefe7a10689c71f946
 Content-Type: application/json
 
-### REFUND (PEDIR REEMBOLSO POR TORMENTA)
+### REFUND (PEDIR REEMBOLSO POR TORMENTA) --- ID DE LA RESERVA
 PATCH http://localhost:3000/booking/refund/68101a8afb6e7118511ee6e7
 Content-Type: application/json
 
@@ -68,7 +68,7 @@ GET http://localhost:3000/payment
 Content-Type: application/json
 
 
-### PAY WITH CASH  (PAGAR CON EFECTIVO, PASO EL ID DEL BOOKING)
+### PAY WITH CASH  (PAGAR CON EFECTIVO) --- ID DE LA RESERVA
 POST http://localhost:3000/payment/payCash/681162f7f70f0b84627bbd80
 Content-Type: application/json
 
