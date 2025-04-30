@@ -64,11 +64,11 @@ Se puede pagar en moneda local o bien en moneda extranjera.
 Seguro de tormenta, en caso que el usuario no pueda disfrutar de su turno debido a una tormenta imprevista se le devolverá el 50% del valor abonado.
 
 ---
-## 🏗️ Arquitectura del proyecto
+# 🏗️ Arquitectura del proyecto
 
 Este backend sigue una **arquitectura en capas** para mantener el código modular, escalable y fácil de mantener. A continuación se describe brevemente cada una de las capas del proyecto:
 
-### 🔁 Flujo típico de una petición:
+## 🔁 Flujo típico de una petición:
 
 1. **Route**: Recibe la petición (ej. `POST /booking`).
 2. **Controller**: Extrae y valida los datos del `req`, llama al `service` adecuado.
