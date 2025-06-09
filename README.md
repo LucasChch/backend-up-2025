@@ -64,6 +64,20 @@ Se puede pagar en moneda local o bien en moneda extranjera.
 Seguro de tormenta, en caso que el usuario no pueda disfrutar de su turno debido a una tormenta imprevista se le devolverá el 50% del valor abonado.
 
 ---
+# 🏗️ Arquitectura del proyecto
+
+Este backend sigue una **arquitectura en capas** para mantener el código modular, escalable y fácil de mantener. A continuación se describe brevemente cada una de las capas del proyecto:
+
+## 🔁 Flujo típico de una petición:
+
+1. **Route**: Recibe la petición (ej. `POST /booking`).
+2. **Controller**: Extrae y valida los datos del `req`, llama al `service` adecuado.
+3. **Service**: Aplica la lógica de negocio (ej. validaciones al reservar), llamando a los demás servicios, y luego llama a la capa `repository` que le corresponde.
+4. **Repository**: Interactúa con la base de datos utilizando Mongoose (ej. crear un `Booking`).
+5. **Model**: Define la estructura de los datos persistidos en MongoDB.
+
+> 💡 Este diseño desacopla las responsabilidades, facilita el testing y permite una evolución más clara del código a medida que crece el proyecto.
+---
 # 🔲 Modelo de dados
 
 ```mermaid
@@ -130,7 +144,6 @@ classDiagram
 
 ```
 ---
-
 # 📚 API Endpoints
 
 ## 🧾 Booking
